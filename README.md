@@ -294,4 +294,76 @@ We need a database where we will store our data. For this we will make use of mL
 
                                                 touch .env
                                                 vi .env
+- Add the connection string to access the database in it, just as below:
+
+                           DB = 'mongodb+srv://<username>:<password>@<network-address>/<dbname>?retryWrites=true&w=majority'
+Note: Ensure to update <username>, <password>, <network-address> and <database> according to your setup
+
+- Now we need to update the index.js to reflect the use of .env so that Node.js can connect to the database.
+
+- Open the file with vim index.js
+
+- Now, paste the entire code below in the file
+                                
+                                                const express = require('express');
+                                                const bodyParser = require('body-parser');
+                                                const mongoose = require('mongoose');
+                                                const routes = require('./routes/api');
+                                                const path = require('path');
+                                                require('dotenv').config();
+
+                                                const app = express();
+
+                                                const port = process.env.PORT || 5000;
+
+                                                //connect to the database
+                                                mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
+                                                .then(() => console.log(`Database connected successfully`))
+                                                .catch(err => console.log(err));
+
+                                                //since mongoose promise is depreciated, we overide it with node's promise
+                                                mongoose.Promise = global.Promise;
+
+                                                app.use((req, res, next) => {
+                                                res.header("Access-Control-Allow-Origin", "\*");
+                                                res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+                                                next();
+                                                });
+
+                                                app.use(bodyParser.json());
+
+                                                app.use('/api', routes);
+
+                                                app.use((err, req, res, next) => {
+                                                console.log(err);
+                                                next();
+                                                });
+
+                                                app.listen(port, () => {
+                                                console.log(`Server running on port ${port}`)
+                                                });
+        
+- Next, we start your server using the command
+                                                
+                                                        node index.js
+- You shall see a message below
+        
 <img width="542" alt="Screenshot 2022-04-20 at 15 26 22" src="https://user-images.githubusercontent.com/80678596/164240910-65acc636-3842-4e18-8130-a2528487d785.png">
+        
+So far we have written backend part of our To-Do application, and configured a database, but we do not have a frontend UI yet. We need ReactJS code to achieve that. But during development, we will need a way to test our code using RESTfulL API. Therefore, we will need to make use of some API development client to test our code.
+
+- Next, we will use Postman to test our API.
+        
+- You can download and install postman on your machine or use it online.
+
+- You should test all the API endpoints and make sure they are working. For the endpoints that require body, you should send JSON back with the necessary fields since it’s what we setup in our code.
+
+- Next, open your Postman, create a POST request to the API
+        
+- This request sends a new task to our To-Do list so the application could store it in the database.
+                                
+                                        http://<PublicIP-or-PublicDNS>:5000/api/todos. 
+        
+<img width="1438" alt="Screenshot 2022-04-20 at 15 53 50" src="https://user-images.githubusercontent.com/80678596/164247400-2778f641-9f4e-4d3d-86df-9c6691ec43cd.png">
+        
+
