@@ -74,5 +74,27 @@ This Project is to implement a web solution based on MERN stack in AWS Cloud.
 
 <img width="573" alt="Screenshot 2022-04-20 at 12 56 39" src="https://user-images.githubusercontent.com/80678596/164216465-78f53bdf-c4a1-4e9e-8e52-a00c6a36776a.png">
 
+- Next, we run the command ls to confirm that you have package.json file created.
 
+                                                ls
+                                          
+## INSTALL EXPRESSJS
 
+Express is a framework for Node.js, therefore a lot of things developers would have programmed is already taken care of out of the box. Therefore it simplifies development, and abstracts a lot of low level details. For example, Express helps to define routes of your application based on HTTP methods and URLs.
+
+- We use express by installing it using npm
+
+                                                npm install express
+                                                
+<img width="636" alt="Screenshot 2022-04-20 at 13 04 41" src="https://user-images.githubusercontent.com/80678596/164217396-d291965f-0a56-417a-9b8c-94a4907d125d.png">
+
+- Next, we create a file index.js with the command below
+
+                                touch index.js
+- Run ls to confirm that your index.js file is successfully created. ( You will see the following in the directory index.js, node_modules  package-lock.json, package.json)
+
+                                        ls    
+                                        
+- Next we will install dotenv module        
+
+                                                npm install dotenv
