@@ -195,4 +195,103 @@ Each task will be associated with some particular endpoint and will use differen
                                                 module.exports = router;
 
 
-- 
+## MODELS
+
+Now comes the interesting part, since the app is going to make use of Mongodb which is a NoSQL database, we need to create a model. A model is at the heart of JavaScript based applications, and it is what makes it interactive.
+
+- To create a Schema and a model, install mongoose which is a Node.js package that makes working with mongodb easier.
+
+- Next we are going to install Mongoose but before that we need to change the directory back to Todo and then from there we install the package 
+
+                                                cd .. 
+                                        
+- We install Mongoose using the command below 
+
+                                              npm install mongoose
+
+- Create a new folder models
+
+                                                mkdir models
+
+- Next, we change directory into the newly created ‘models’ folder with
+                                        
+                                                cd models
+                                                
+- Inside the models folder, create a file and name it todo.js
+
+                                                touch todo.js
+
+Note: You can use the command below at once 
+
+                                                mkdir models && cd models && touch todo.js
+                                                
+- Open the file created with vim todo.js then paste the code below in the file
+
+                                                vim todo.js
+                                                
+- Copy and paste the command below into the open todo.js file
+
+                                                        const mongoose = require('mongoose');
+                                                        
+                                                        const Schema = mongoose.Schema;
+
+                                                        //create schema for todo
+                                                        const TodoSchema = new Schema({
+                                                        action: {
+                                                        type: String,
+                                                        required: [true, 'The todo text field is required']
+                                                        }
+                                                        })
+
+                                                        //create model for todo
+                                                        const Todo = mongoose.model('todo', TodoSchema);
+
+                                                        module.exports = Todo;
+                                                        
+
+- Next, we need to update our routes from the file api.js in ‘routes’ directory to make use of the new model.
+
+- In Routes directory, open api.js with vim api.js, delete the code inside with :%d command and paste there code below into it then save and exit
+
+                                                        const express = require ('express');
+                                                        const router = express.Router();
+                                                        const Todo = require('../models/todo');
+
+                                                        router.get('/todos', (req, res, next) => {
+
+                                                        //this will return all the data, exposing only the id and action field to the client
+                                                        Todo.find({}, 'action')
+                                                        .then(data => res.json(data))
+                                                        .catch(next)
+                                                        });
+
+                                                        router.post('/todos', (req, res, next) => {
+                                                        if(req.body.action){
+                                                        Todo.create(req.body)
+                                                        .then(data => res.json(data))
+                                                        .catch(next)
+                                                        }else {
+                                                        res.json({
+                                                        error: "The input field is empty"
+                                                        })
+                                                        }
+                                                        });
+
+                                                        router.delete('/todos/:id', (req, res, next) => {
+                                                        Todo.findOneAndDelete({"_id": req.params.id})
+                                                        .then(data => res.json(data))
+                                                        .catch(next)
+                                                        })
+
+                                                        module.exports = router;
+                                                        
+## MONGODB DATABASE
+
+We need a database where we will store our data. For this we will make use of mLab. mLab provides MongoDB database as a service solution (DBaaS), so to make life easy, you will need to sign up for a shared clusters free account, which is ideal for our use case. Sign up with this https://www.mongodb.com/. Follow the sign up process, select AWS as the cloud provider, and choose a region near you.
+
+- In the index.js file, we specified process.env to access environment variables, but we have not yet created this file. So we need to do that now.
+- Create a file in your Todo directory and name it .env.
+
+                                                touch .env
+                                                vi .env
+<img width="542" alt="Screenshot 2022-04-20 at 15 26 22" src="https://user-images.githubusercontent.com/80678596/164240910-65acc636-3842-4e18-8130-a2528487d785.png">
