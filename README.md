@@ -98,3 +98,39 @@ Express is a framework for Node.js, therefore a lot of things developers would h
 - Next we will install dotenv module        
 
                                                 npm install dotenv
+                                                
+- Next we open the index.js file with the command line below 
+
+                                                vim index.js
+                                                
+- Next, copy and paste the code into the open file and save it. (Use :w to save in vim and use :qa to exit vim)
+
+                                                const express = require('express');
+                                                require('dotenv').config();
+
+                                                const app = express();
+
+                                                const port = process.env.PORT || 5000;
+
+                                                app.use((req, res, next) => {
+                                                res.header("Access-Control-Allow-Origin", "\*");
+                                                res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+                                                next();
+                                                });
+
+                                                app.use((req, res, next) => {
+                                                res.send('Welcome to Express');
+                                                });
+
+                                                app.listen(port, () => {
+                                                console.log(`Server running on port ${port}`)
+                                                });
+                                                
+ - Next we start our server to see that it works 
+
+                                                node index.js
+                                                
+- If every thing goes well, you should see Server running on port 5000 in your terminal.
+
+<img width="382" alt="Screenshot 2022-04-20 at 13 15 44" src="https://user-images.githubusercontent.com/80678596/164219120-41ce0fee-52c8-4024-8ddf-8ad730bb9074.png">
+                                               
