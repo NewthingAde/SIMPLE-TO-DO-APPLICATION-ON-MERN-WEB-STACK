@@ -105,26 +105,26 @@ Express is a framework for Node.js, therefore a lot of things developers would h
                                                 
 - Next, copy and paste the code into the open file and save it. (Use :w to save in vim and use :qa to exit vim)
 
-                                                const express = require('express');
-                                                require('dotenv').config();
+                                const express = require('express');
+                                require('dotenv').config();
 
-                                                const app = express();
+                                const app = express();
 
-                                                const port = process.env.PORT || 5000;
+                                const port = process.env.PORT || 5000;
 
-                                                app.use((req, res, next) => {
-                                                res.header("Access-Control-Allow-Origin", "\*");
-                                                res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-                                                next();
-                                                });
+                                app.use((req, res, next) => {
+                                res.header("Access-Control-Allow-Origin", "\*");
+                                res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+                                next();
+                                });
 
-                                                app.use((req, res, next) => {
-                                                res.send('Welcome to Express');
-                                                });
+                                app.use((req, res, next) => {
+                                res.send('Welcome to Express');
+                                });
 
-                                                app.listen(port, () => {
-                                                console.log(`Server running on port ${port}`)
-                                                });
+                                app.listen(port, () => {
+                                console.log(`Server running on port ${port}`)
+                                });
                                                 
  - Next we start our server to see that it works 
 
@@ -176,23 +176,23 @@ Each task will be associated with some particular endpoint and will use differen
                                           
 - copy and paste the folllowing command in the api.js file. USe :w to save it and :q to exit
 
-                                                const express = require ('express');
-                                                
-                                                const router = express.Router();
+                                const express = require ('express');
 
-                                                router.get('/todos', (req, res, next) => {
+                                const router = express.Router();
 
-                                                });
+                                router.get('/todos', (req, res, next) => {
 
-                                                router.post('/todos', (req, res, next) => {
+                                });
 
-                                                });
+                                router.post('/todos', (req, res, next) => {
 
-                                                router.delete('/todos/:id', (req, res, next) => {
+                                });
 
-                                                })
+                                router.delete('/todos/:id', (req, res, next) => {
 
-                                                module.exports = router;
+                                })
+
+                                module.exports = router;
 
 
 ## MODELS
@@ -231,59 +231,59 @@ Note: You can use the command below at once
                                                 
 - Copy and paste the command below into the open todo.js file
 
-                                                        const mongoose = require('mongoose');
-                                                        
-                                                        const Schema = mongoose.Schema;
+                                        const mongoose = require('mongoose');
 
-                                                        //create schema for todo
-                                                        const TodoSchema = new Schema({
-                                                        action: {
-                                                        type: String,
-                                                        required: [true, 'The todo text field is required']
-                                                        }
-                                                        })
+                                        const Schema = mongoose.Schema;
 
-                                                        //create model for todo
-                                                        const Todo = mongoose.model('todo', TodoSchema);
+                                        //create schema for todo
+                                        const TodoSchema = new Schema({
+                                        action: {
+                                        type: String,
+                                        required: [true, 'The todo text field is required']
+                                        }
+                                        })
 
-                                                        module.exports = Todo;
+                                        //create model for todo
+                                        const Todo = mongoose.model('todo', TodoSchema);
+
+                                        module.exports = Todo;
                                                         
 
 - Next, we need to update our routes from the file api.js in ‘routes’ directory to make use of the new model.
 
 - In Routes directory, open api.js with vim api.js, delete the code inside with :%d command and paste there code below into it then save and exit
 
-                                                        const express = require ('express');
-                                                        const router = express.Router();
-                                                        const Todo = require('../models/todo');
+                                const express = require ('express');
+                                const router = express.Router();
+                                const Todo = require('../models/todo');
 
-                                                        router.get('/todos', (req, res, next) => {
+                                router.get('/todos', (req, res, next) => {
 
-                                                        //this will return all the data, exposing only the id and action field to the client
-                                                        Todo.find({}, 'action')
-                                                        .then(data => res.json(data))
-                                                        .catch(next)
-                                                        });
+                                //this will return all the data, exposing only the id and action field to the client
+                                Todo.find({}, 'action')
+                                .then(data => res.json(data))
+                                .catch(next)
+                                });
 
-                                                        router.post('/todos', (req, res, next) => {
-                                                        if(req.body.action){
-                                                        Todo.create(req.body)
-                                                        .then(data => res.json(data))
-                                                        .catch(next)
-                                                        }else {
-                                                        res.json({
-                                                        error: "The input field is empty"
-                                                        })
-                                                        }
-                                                        });
+                                router.post('/todos', (req, res, next) => {
+                                if(req.body.action){
+                                Todo.create(req.body)
+                                .then(data => res.json(data))
+                                .catch(next)
+                                }else {
+                                res.json({
+                                error: "The input field is empty"
+                                })
+                                }
+                                });
 
-                                                        router.delete('/todos/:id', (req, res, next) => {
-                                                        Todo.findOneAndDelete({"_id": req.params.id})
-                                                        .then(data => res.json(data))
-                                                        .catch(next)
-                                                        })
+                                router.delete('/todos/:id', (req, res, next) => {
+                                Todo.findOneAndDelete({"_id": req.params.id})
+                                .then(data => res.json(data))
+                                .catch(next)
+                                })
 
-                                                        module.exports = router;
+                                module.exports = router;
                                                         
 ## MONGODB DATABASE
 
@@ -305,44 +305,44 @@ Note: Ensure to update <username>, <password>, <network-address> and <database> 
 
 - Now, paste the entire code below in the file
                                 
-                                                const express = require('express');
-                                                const bodyParser = require('body-parser');
-                                                const mongoose = require('mongoose');
-                                                const routes = require('./routes/api');
-                                                const path = require('path');
-                                                require('dotenv').config();
+                                const express = require('express');
+                                const bodyParser = require('body-parser');
+                                const mongoose = require('mongoose');
+                                const routes = require('./routes/api');
+                                const path = require('path');
+                                require('dotenv').config();
 
-                                                const app = express();
+                                const app = express();
 
-                                                const port = process.env.PORT || 5000;
+                                const port = process.env.PORT || 5000;
 
-                                                //connect to the database
-                                                mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
-                                                .then(() => console.log(`Database connected successfully`))
-                                                .catch(err => console.log(err));
+                                //connect to the database
+                                mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
+                                .then(() => console.log(`Database connected successfully`))
+                                .catch(err => console.log(err));
 
-                                                //since mongoose promise is depreciated, we overide it with node's promise
-                                                mongoose.Promise = global.Promise;
+                                //since mongoose promise is depreciated, we overide it with node's promise
+                                mongoose.Promise = global.Promise;
 
-                                                app.use((req, res, next) => {
-                                                res.header("Access-Control-Allow-Origin", "\*");
-                                                res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-                                                next();
-                                                });
+                                app.use((req, res, next) => {
+                                res.header("Access-Control-Allow-Origin", "\*");
+                                res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+                                next();
+                                });
 
-                                                app.use(bodyParser.json());
+                                app.use(bodyParser.json());
 
-                                                app.use('/api', routes);
+                                app.use('/api', routes);
 
-                                                app.use((err, req, res, next) => {
-                                                console.log(err);
-                                                next();
-                                                });
+                                app.use((err, req, res, next) => {
+                                console.log(err);
+                                next();
+                                });
 
-                                                app.listen(port, () => {
-                                                console.log(`Server running on port ${port}`)
-                                                });
-        
+                                app.listen(port, () => {
+                                console.log(`Server running on port ${port}`)
+                                });
+
 - Next, we start your server using the command
                                                 
                                                         node index.js
@@ -386,11 +386,11 @@ Since we are done with the functionality we want from our backend and API, it is
 
 - In Todo folder open the package.json file. Change only the script session of the file and replace with the code below.
         
-                                                        "scripts": {
-                                                        "start": "node index.js",
-                                                        "start-watch": "nodemon index.js",
-                                                        "dev": "concurrently \"npm run start-watch\" \"cd client && npm start\""
-                                                        },
+                                "scripts": {
+                                "start": "node index.js",
+                                "start-watch": "nodemon index.js",
+                                "dev": "concurrently \"npm run start-watch\" \"cd client && npm start\""
+                                },
         
 - Next, Change directory to ‘client’
                         
@@ -442,54 +442,158 @@ Important note: In order to be able to access the application from the Internet 
         
 - Copy and paste the following
         
-                                                import React, { Component } from 'react';
-                                                import axios from 'axios';
+                                import React, { Component } from 'react';
+                                import axios from 'axios';
 
-                                                class Input extends Component {
+                                class Input extends Component {
 
-                                                state = {
-                                                action: ""
-                                                }
+                                state = {
+                                action: ""
+                                }
 
-                                                addTodo = () => {
-                                                const task = {action: this.state.action}
+                                addTodo = () => {
+                                const task = {action: this.state.action}
 
-                                                    if(task.action && task.action.length > 0){
-                                                      axios.post('/api/todos', task)
-                                                        .then(res => {
-                                                          if(res.data){
-                                                            this.props.getTodos();
-                                                            this.setState({action: ""})
-                                                          }
-                                                        })
-                                                        .catch(err => console.log(err))
-                                                    }else {
-                                                      console.log('input field required')
-                                                    }
+                                    if(task.action && task.action.length > 0){
+                                      axios.post('/api/todos', task)
+                                        .then(res => {
+                                          if(res.data){
+                                            this.props.getTodos();
+                                            this.setState({action: ""})
+                                          }
+                                        })
+                                        .catch(err => console.log(err))
+                                    }else {
+                                      console.log('input field required')
+                                    }
 
-                                                }
+                                }
 
-                                                handleChange = (e) => {
-                                                this.setState({
-                                                action: e.target.value
-                                                })
-                                                }
+                                handleChange = (e) => {
+                                this.setState({
+                                action: e.target.value
+                                })
+                                }
 
-                                                render() {
-                                                let { action } = this.state;
-                                                return (
-                                                <div>
-                                                <input type="text" onChange={this.handleChange} value={action} />
-                                                <button onClick={this.addTodo}>add todo</button>
-                                                </div>
-                                                )
-                                                }
-                                                }
+                                render() {
+                                let { action } = this.state;
+                                return (
+                                <div>
+                                <input type="text" onChange={this.handleChange} value={action} />
+                                <button onClick={this.addTodo}>add todo</button>
+                                </div>
+                                )
+                                }
+                                }
 
-                                                export default Input
+                                export default Input
         
 - move back twice to the client folder and Install Axios
         
                                                 npm install axios
+        
+- Go to ‘components’ directory
+        
+                                cd src/components
+        
+- After that open your ListTodo.js
+                
+                                vi ListTodo.js
+        
+- in the ListTodo.js copy and paste the following code
+                
+                        import React from 'react';
+
+                        const ListTodo = ({ todos, deleteTodo }) => {
+
+                        return (
+                        <ul>
+                        {
+                        todos &&
+                        todos.length > 0 ?
+                        (
+                        todos.map(todo => {
+                        return (
+                        <li key={todo._id} onClick={() => deleteTodo(todo._id)}>{todo.action}</li>
+                        )
+                        })
+                        )
+                        :
+                        (
+                        <li>No todo(s) left</li>
+                        )
+                        }
+                        </ul>
+                        )
+                        }
+
+                        export default ListTodo
+
+        
+- Then in your Todo.js file you write the following code
+        
+                                import React, {Component} from 'react';
+                                import axios from 'axios';
+
+                                import Input from './Input';
+                                import ListTodo from './ListTodo';
+
+                                class Todo extends Component {
+
+                                state = {
+                                todos: []
+                                }
+
+                                componentDidMount(){
+                                this.getTodos();
+                                }
+
+                                getTodos = () => {
+                                axios.get('/api/todos')
+                                .then(res => {
+                                if(res.data){
+                                this.setState({
+                                todos: res.data
+                                })
+                                }
+                                })
+                                .catch(err => console.log(err))
+                                }
+
+                                deleteTodo = (id) => {
+
+                                    axios.delete(`/api/todos/${id}`)
+                                      .then(res => {
+                                        if(res.data){
+                                          this.getTodos()
+                                        }
+                                      })
+                                      .catch(err => console.log(err))
+
+                                }
+
+                                render() {
+                                let { todos } = this.state;
+
+                                    return(
+                                      <div>
+                                        <h1>My Todo(s)</h1>
+                                        <Input getTodos={this.getTodos}/>
+                                        <ListTodo todos={todos} deleteTodo={this.deleteTodo}/>
+                                      </div>
+                                    )
+
+                                }
+                                }
+
+                                export default Todo;
+
+- We need to make little adjustment to our react code. Delete the logo and adjust our App.js to look like this. Move to the src folder
+        
+                                cd ..
+        
+- Make sure that you are in the src folder and run
+        
+                                vi App.js
         
 - 
