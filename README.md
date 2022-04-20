@@ -133,4 +133,18 @@ Express is a framework for Node.js, therefore a lot of things developers would h
 - If every thing goes well, you should see Server running on port 5000 in your terminal.
 
 <img width="382" alt="Screenshot 2022-04-20 at 13 15 44" src="https://user-images.githubusercontent.com/80678596/164219120-41ce0fee-52c8-4024-8ddf-8ad730bb9074.png">
-                                               
+
+- Now we need to open this port in EC2 Security Groups and open port 5000
+
+- Next, Open up your browser and try to access your server’s Public IP or Public DNS name followed by port 5000:
+
+                                http://<PublicIP-or-PublicDNS>:5000
+                                
+Quick reminder how to get your server’s Public IP and public DNS name:
+1) You can find it in your AWS web console in EC2 details
+2) Run curl -s http://169.254.169.254/latest/meta-data/public-ipv4 for Public IP address or curl -s http://169.254.169.254/latest/meta-data/public-hostname for Public DNS name.
+
+<img width="506" alt="Screenshot 2022-04-20 at 13 20 22" src="https://user-images.githubusercontent.com/80678596/164220538-171a10ce-4960-46b7-8b16-502caf3408e2.png">
+
+<img width="592" alt="Screenshot 2022-04-20 at 13 22 13" src="https://user-images.githubusercontent.com/80678596/164220581-85b02887-1a21-4573-b67a-e080f1d332d1.png">
+
