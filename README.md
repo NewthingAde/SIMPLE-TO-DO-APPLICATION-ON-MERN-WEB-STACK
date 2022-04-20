@@ -366,4 +366,50 @@ So far we have written backend part of our To-Do application, and configured a d
         
 <img width="1438" alt="Screenshot 2022-04-20 at 15 53 50" src="https://user-images.githubusercontent.com/80678596/164247400-2778f641-9f4e-4d3d-86df-9c6691ec43cd.png">
         
+## FRONTEND CREATION
 
+Since we are done with the functionality we want from our backend and API, it is time to create a user interface for a Web client (browser) to interact with the application via API. To start out with the frontend of the To-do app, we will use the create-react-app command to scaffold our app.
+        
+- In the same root directory as your backend code, which is the Todo directory, we will run the following command 
+                                
+                                         npx create-react-app client
+        
+- This will create a new folder in your Todo directory called client, where you will add all the react code.
+
+- Next, we Install concurrently. It is used to run more than one command simultaneously from the same terminal window.
+        
+                                                npm install concurrently --save-dev
+        
+- Next, we Install nodemon. It is used to run and monitor the server. If there is any change in the server code, nodemon will restart it automatically and load the new changes.
+        
+                                                        npm install nodemon --save-dev
+
+- In Todo folder open the package.json file. Change only the script session of the file and replace with the code below.
+        
+                                                        "scripts": {
+                                                        "start": "node index.js",
+                                                        "start-watch": "nodemon index.js",
+                                                        "dev": "concurrently \"npm run start-watch\" \"cd client && npm start\""
+                                                        },
+        
+- Next, Change directory to ‘client’
+                        
+                                        cd client
+        
+- Next, Open the package.json file
+        
+                                        vi package.json
+        
+- Add the key value pair in the package.json file 
+        
+                                        "proxy": "http://localhost:5000",
+        
+- Now, go back inside the Todo directory, and simply do:
+        
+                                        npm dev run
+        
+- Your app should open and start running on localhost:3000
+        
+Important note: In order to be able to access the application from the Internet you have to open TCP port 3000 on EC2 by adding a new Security Group rule. You already know how to do it.
+
+<img width="1352" alt="Screenshot 2022-04-20 at 17 01 08" src="https://user-images.githubusercontent.com/80678596/164261315-27ade616-c093-4f10-a7c8-e4f5f52e87c5.png">
