@@ -148,3 +148,15 @@ Quick reminder how to get your server’s Public IP and public DNS name:
 
 <img width="592" alt="Screenshot 2022-04-20 at 13 22 13" src="https://user-images.githubusercontent.com/80678596/164220581-85b02887-1a21-4573-b67a-e080f1d332d1.png">
 
+## CREATING ROUTES
+
+There are three actions that our To-Do application needs to be able to do:
+
+Create a new task
+Display list of all tasks
+Delete a completed task
+Each task will be associated with some particular endpoint and will use different standard HTTP request methods: POST, GET, DELETE.
+
+- For each task, we need to create routes that will define various endpoints that the To-do app will depend on. So let us create a folder routes
+
+                                                        
