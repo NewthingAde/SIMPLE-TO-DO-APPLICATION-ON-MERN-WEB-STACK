@@ -413,3 +413,83 @@ Since we are done with the functionality we want from our backend and API, it is
 Important note: In order to be able to access the application from the Internet you have to open TCP port 3000 on EC2 by adding a new Security Group rule. You already know how to do it.
 
 <img width="1352" alt="Screenshot 2022-04-20 at 17 01 08" src="https://user-images.githubusercontent.com/80678596/164261315-27ade616-c093-4f10-a7c8-e4f5f52e87c5.png">
+
+### Creating your React Components
+
+- From your Todo directory run
+                                
+                                        cd client
+        
+- move to the src directory
+                                
+                                        cd src
+        
+- Inside your src folder create another folder called components
+        
+                                        mkdir components
+        
+- Move into the components directory with
+
+                                        cd components
+        
+- Inside ‘components’ directory create three files Input.js, ListTodo.js and Todo.js.
+        
+                                        touch Input.js ListTodo.js Todo.js
+
+- Open Input.js file
+        
+                                        - vi Input.js
+        
+- Copy and paste the following
+        
+                                                import React, { Component } from 'react';
+                                                import axios from 'axios';
+
+                                                class Input extends Component {
+
+                                                state = {
+                                                action: ""
+                                                }
+
+                                                addTodo = () => {
+                                                const task = {action: this.state.action}
+
+                                                    if(task.action && task.action.length > 0){
+                                                      axios.post('/api/todos', task)
+                                                        .then(res => {
+                                                          if(res.data){
+                                                            this.props.getTodos();
+                                                            this.setState({action: ""})
+                                                          }
+                                                        })
+                                                        .catch(err => console.log(err))
+                                                    }else {
+                                                      console.log('input field required')
+                                                    }
+
+                                                }
+
+                                                handleChange = (e) => {
+                                                this.setState({
+                                                action: e.target.value
+                                                })
+                                                }
+
+                                                render() {
+                                                let { action } = this.state;
+                                                return (
+                                                <div>
+                                                <input type="text" onChange={this.handleChange} value={action} />
+                                                <button onClick={this.addTodo}>add todo</button>
+                                                </div>
+                                                )
+                                                }
+                                                }
+
+                                                export default Input
+        
+- move back twice to the client folder and Install Axios
+        
+                                                npm install axios
+        
+- 
