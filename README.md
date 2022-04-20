@@ -152,11 +152,47 @@ Quick reminder how to get your server’s Public IP and public DNS name:
 
 There are three actions that our To-Do application needs to be able to do:
 
-Create a new task
-Display list of all tasks
-Delete a completed task
+1. Create a new task
+2. Display list of all tasks
+3. Delete a completed task
+
 Each task will be associated with some particular endpoint and will use different standard HTTP request methods: POST, GET, DELETE.
 
 - For each task, we need to create routes that will define various endpoints that the To-do app will depend on. So let us create a folder routes
 
-                                                        
+                                            mkdir routes
+                                            
+- Change directory to routes folder.
+
+                                               cd routes
+                                               
+- Next, create a file api.js with the command below
+
+                                                touch api.js
+
+- Open the api.js file you just with the command below
+
+                                                vim api.js
+                                          
+- copy and paste the folllowing command in the api.js file. USe :w to save it and :q to exit
+
+                                                const express = require ('express');
+                                                
+                                                const router = express.Router();
+
+                                                router.get('/todos', (req, res, next) => {
+
+                                                });
+
+                                                router.post('/todos', (req, res, next) => {
+
+                                                });
+
+                                                router.delete('/todos/:id', (req, res, next) => {
+
+                                                })
+
+                                                module.exports = router;
+
+
+- 
