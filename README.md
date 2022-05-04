@@ -1,6 +1,7 @@
 # SIMPLE-TO-DO-APPLICATION-ON-MERN-WEB-STACK
 
-This Project is to implement a web solution based on MERN stack in AWS Cloud.
+This Project is to implement a web solution based on MERN stack in AWS Cloud. MERN (MongoDB, ExpressJS, ReactJS, NodeJS)
+
 
 - ### MERN Web stack consists of following components:
 
